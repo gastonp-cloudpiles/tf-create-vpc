@@ -1,6 +1,18 @@
 locals {
   az_a = "${var.region}a"
   az_b = "${var.region}b"
+
+  # Nombres derivados del prefijo
+  vpc_name       = "${var.name_prefix}-vpc"
+  igw_name       = "${var.name_prefix}-igw"
+  natgw_name     = "${var.name_prefix}-natgw"
+  rt_public_name = "${var.name_prefix}-rt-pub"
+  rt_priv1_name  = "${var.name_prefix}-rt-priv1"
+  rt_priv2_name  = "${var.name_prefix}-rt-priv2"
+  pub1_name      = "${var.name_prefix}-pub1"
+  pub2_name      = "${var.name_prefix}-pub2"
+  priv1_name     = "${var.name_prefix}-priv1"
+  priv2_name     = "${var.name_prefix}-priv2"
 }
 
 # -------------------------
@@ -12,7 +24,7 @@ resource "aws_vpc" "this" {
   enable_dns_hostnames = true
 
   tags = merge(var.tags, {
-    Name = var.vpc_name
+    Name = local.vpc_name
   })
 }
 
@@ -23,7 +35,7 @@ resource "aws_internet_gateway" "this" {
   vpc_id = aws_vpc.this.id
 
   tags = merge(var.tags, {
-    Name = var.igw_name
+    Name = local.igw_name
   })
 }
 
@@ -37,7 +49,7 @@ resource "aws_subnet" "pub1" {
   map_public_ip_on_launch = true
 
   tags = merge(var.tags, {
-    Name = var.pub1_name
+    Name = local.pub1_name
     Tier = "public"
   })
 }
@@ -49,7 +61,7 @@ resource "aws_subnet" "pub2" {
   map_public_ip_on_launch = true
 
   tags = merge(var.tags, {
-    Name = var.pub2_name
+    Name = local.pub2_name
     Tier = "public"
   })
 }
@@ -63,7 +75,7 @@ resource "aws_subnet" "priv1" {
   availability_zone = local.az_a
 
   tags = merge(var.tags, {
-    Name = var.priv1_name
+    Name = local.priv1_name
     Tier = "private"
   })
 }
@@ -74,7 +86,7 @@ resource "aws_subnet" "priv2" {
   availability_zone = local.az_b
 
   tags = merge(var.tags, {
-    Name = var.priv2_name
+    Name = local.priv2_name
     Tier = "private"
   })
 }
@@ -86,7 +98,7 @@ resource "aws_eip" "nat" {
   domain = "vpc"
 
   tags = merge(var.tags, {
-    Name = "${var.natgw_name}-eip"
+    Name = "${local.natgw_name}-eip"
   })
 }
 
@@ -95,7 +107,7 @@ resource "aws_nat_gateway" "this" {
   subnet_id     = aws_subnet.pub1.id
 
   tags = merge(var.tags, {
-    Name = var.natgw_name
+    Name = local.natgw_name
   })
 
   depends_on = [aws_internet_gateway.this]
@@ -108,7 +120,7 @@ resource "aws_route_table" "public" {
   vpc_id = aws_vpc.this.id
 
   tags = merge(var.tags, {
-    Name = var.rt_public_name
+    Name = local.rt_public_name
   })
 }
 
@@ -133,7 +145,7 @@ resource "aws_route_table" "priv1" {
   vpc_id = aws_vpc.this.id
 
   tags = merge(var.tags, {
-    Name = var.rt_priv1_name
+    Name = local.rt_priv1_name
   })
 }
 
@@ -153,7 +165,7 @@ resource "aws_route_table" "priv2" {
   vpc_id = aws_vpc.this.id
 
   tags = merge(var.tags, {
-    Name = var.rt_priv2_name
+    Name = local.rt_priv2_name
   })
 }
 

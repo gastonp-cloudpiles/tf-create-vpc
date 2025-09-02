@@ -24,55 +24,10 @@ variable "tags" {
   default     = {}
 }
 
-# Nombres
-variable "vpc_name" {
+# Prefijo único para nombres
+variable "name_prefix" {
   type    = string
-  default = "ecs-vpc"
-}
-
-variable "igw_name" {
-  type    = string
-  default = "ecs-igw"
-}
-
-variable "natgw_name" {
-  type    = string
-  default = "ecs-natgw"
-}
-
-variable "rt_public_name" {
-  type    = string
-  default = "ecs-rt-pub"
-}
-
-variable "rt_priv1_name" {
-  type    = string
-  default = "ecs-rt-priv1"
-}
-
-variable "rt_priv2_name" {
-  type    = string
-  default = "ecs-rt-priv2"
-}
-
-variable "pub1_name" {
-  type    = string
-  default = "ecs-pub1"
-}
-
-variable "pub2_name" {
-  type    = string
-  default = "ecs-pub2"
-}
-
-variable "priv1_name" {
-  type    = string
-  default = "ecs-priv1"
-}
-
-variable "priv2_name" {
-  type    = string
-  default = "ecs-priv2"
+  default = "ecs"
 }
 
 # CIDRs

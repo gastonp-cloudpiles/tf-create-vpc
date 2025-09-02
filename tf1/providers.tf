@@ -12,7 +12,6 @@ provider "aws" {
   region  = var.region
   profile = "sandbox"
 
-  # (opcional) tags por defecto
   default_tags {
     tags = {
       Project = var.project
