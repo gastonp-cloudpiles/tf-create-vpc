@@ -4,7 +4,7 @@ owner       = "gaston"
 env         = "lab"
 
 # Cambiá esto y todos los nombres se ajustan
-name_prefix = "ecsnew"
+name_prefix = "ecsnewxxx"
 
 tags = {
   CostCenter = "lab"
